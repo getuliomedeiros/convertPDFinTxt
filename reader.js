@@ -17,25 +17,22 @@ function printRows() {
 }
 
 new pdfreader.PdfReader().parseFileItems('texto.pdf', function(err, item){
-  if (err)
+  if (err){
     console.error(err);
-  else if (!item || item.page) {
-    
+  }else if (!item || item.page) {
     printRows();
-
     rows = {};
-    
-    console.log(data);
-
-    fs.writeFile('./arquivo.txt', data , function(erro) {
-        if(erro) {
-            throw erro;
-        }
-        console.log("Arquivo salvo");
-    }); 
-  }
-  else if (item.text) {
+    saveFile();
+  }else if (item.text) {
     (rows[item.y] = rows[item.y] || []).push(item.text);
   }
 });
 
+function saveFile(){
+  fs.writeFile('./arquivo.txt', data , function(erro) {
+    if(erro) {
+        throw erro;
+    }
+    console.log("Arquivo salvo");
+  }); 
+}
